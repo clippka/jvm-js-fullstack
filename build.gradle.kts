@@ -11,7 +11,7 @@ val kmongoVersion = "4.5.0"
 plugins {
     kotlin("multiplatform") version "1.7.10"
     application //to run JVM part
-    id("org.jetbrains.compose") version "1.1.1"
+    id("org.jetbrains.compose") version "1.2.0-beta01"
     kotlin("plugin.serialization") version "1.7.10"
 }
 
@@ -27,7 +27,7 @@ kotlin {
     jvm {
         withJava()
     }
-    js {
+    js(IR) {
         browser {
             binaries.executable()
         }
@@ -49,6 +49,7 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
+                implementation(compose.runtime)
                 implementation("io.ktor:ktor-serialization:$ktorVersion")
                 implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
@@ -69,8 +70,6 @@ kotlin {
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation(project.dependencies.enforcedPlatform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:$kotlinWrappersVersion"))
-                implementation("org.jetbrains.kotlin-wrappers:kotlin-react")
-                implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom")
             }
         }
     }
